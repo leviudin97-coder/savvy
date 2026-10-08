@@ -1,0 +1,742 @@
+<title>SAVVY Space Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+/* Layout: full-bleed photographic hero, then alternating ivory / cream / charcoal bands on an 80rem column. Single committed light brand look. */
+:root{
+  --ivory:#f4eee3; --cream:#eae1d0; --espresso:#2b1a12; --chocolate:#3d2817; --charcoal:#1a1410;
+  --gold:#c9a961; --gold-soft:#d4b57d; --gold-ink:#7f6328; /* gold-ink = AA-contrast gold for small text on light grounds */
+  --muted:#6b5a4a; --line:rgba(43,26,18,.14); --line-dark:rgba(244,238,227,.16);
+  --serif:"Cormorant Garamond","Playfair Display",Georgia,serif;
+  --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+  color-scheme:light;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:var(--ivory);color:var(--espresso);font-family:var(--sans);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;font-feature-settings:"ss01","cv11";overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:400;line-height:1.05;letter-spacing:-.01em;margin:0;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:80rem;margin-inline:auto;padding-inline:clamp(16px,4vw,24px)}
+.eyebrow{font-family:var(--sans);font-size:.72rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-ink)}
+.on-dark .eyebrow,.eyebrow.light{color:var(--gold)}
+.display-lg{font-family:var(--serif);font-size:clamp(2.25rem,5vw,4.25rem);line-height:1.02;letter-spacing:-.015em}
+.lead{color:var(--muted);font-size:1.0625rem;max-width:60ch}
+.hairline{height:1px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold) 80%,transparent);border:0}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:1rem 1.75rem;font-size:.75rem;font-weight:500;letter-spacing:.22em;text-transform:uppercase;border:1px solid transparent;transition:background .3s,border-color .3s,color .3s;cursor:pointer;font-family:var(--sans)}
+.btn-gold{background:var(--gold);color:var(--espresso)}
+.btn-gold:hover{background:var(--gold-soft)}
+.btn-ghost{border-color:rgba(244,238,227,.45);color:var(--ivory)}
+.btn-ghost:hover{border-color:var(--ivory)}
+.btn-dark{background:var(--espresso);color:var(--ivory)}
+.btn-dark:hover{background:var(--chocolate)}
+.ico{width:1.05em;height:1.05em;flex:none}
+section{padding-block:clamp(4.5rem,9vw,8rem);background:var(--sec,var(--ivory))}
+/* Dark sections (chocolate / espresso), matching the original site rhythm */
+.tone-dark{color:var(--ivory);--muted:rgba(244,238,227,.72);--line:rgba(244,238,227,.16);--gold-ink:var(--gold)}
+.tone-dark .svc{color:var(--ivory)}
+.tone-dark .svc .ph{background:rgba(0,0,0,.2)}
+.sec-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:1.5rem;margin-bottom:clamp(2.5rem,5vw,4rem)}
+.sec-head .display-lg{margin-top:1rem;max-width:18ch}
+.textlink{font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid var(--gold);padding-bottom:4px}
+
+/* Top bar */
+.topbar{background:var(--charcoal);color:rgba(244,238,227,.75);font-size:.75rem;letter-spacing:.04em}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding-block:.55rem}
+.topbar .group{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+.topbar a:hover{color:var(--ivory)}
+.topbar .soc{display:flex;gap:.9rem;padding-left:1.25rem;border-left:1px solid var(--line-dark)}
+.topbar .soc a{display:flex}
+.dot{width:3px;height:3px;border-radius:50%;background:var(--gold)}
+
+/* Header */
+header.site{position:absolute;inset-inline:0;top:auto;z-index:50;transition:background .4s,padding .4s}
+header.site.stuck{position:fixed;top:0;background:rgba(26,20,16,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+header.site .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:1.4rem;transition:padding .4s}
+header.site.stuck .wrap{padding-block:.85rem}
+.logo{display:flex;align-items:center;gap:.75rem;color:var(--ivory)}
+.logo svg{width:36px;height:36px;color:var(--gold)}
+.logo .w1{display:block;font-family:var(--serif);font-size:1.15rem;letter-spacing:.35em;line-height:1}
+.logo .w2{display:block;font-size:.55rem;letter-spacing:.4em;opacity:.7;margin-top:.3rem}
+nav.main{display:flex;align-items:center;gap:2.25rem}
+nav.main a.nl{position:relative;font-size:.75rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,238,227,.85)}
+nav.main a.nl::after{content:"";position:absolute;left:0;bottom:-5px;height:1px;width:100%;background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease)}
+nav.main a.nl:hover{color:var(--ivory)}
+nav.main a.nl:hover::after{transform:scaleX(1)}
+.hdr-cta{display:flex;align-items:center;gap:1rem}
+.wa-chip{display:flex;align-items:center;justify-content:center;width:40px;height:40px;border:1px solid rgba(244,238,227,.3);color:var(--ivory);border-radius:50%;transition:border-color .3s,color .3s}
+.wa-chip:hover{border-color:var(--gold);color:var(--gold)}
+.hdr-cta .btn{padding:.75rem 1.2rem;font-size:.7rem;border-color:var(--gold);color:var(--ivory)}
+.hdr-cta .btn:hover{background:var(--gold);color:var(--espresso)}
+.burger{display:none;background:none;border:1px solid rgba(244,238,227,.3);color:var(--ivory);width:42px;height:42px;align-items:center;justify-content:center;cursor:pointer}
+.mnav{position:fixed;inset:0;z-index:70;background:var(--charcoal);color:var(--ivory);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 1.5rem) 24px calc(env(safe-area-inset-bottom,0px) + 1.5rem)}
+.mnav .top{display:flex;justify-content:space-between;align-items:center}
+.mnav ul{list-style:none;padding:0;margin:3rem 0 auto;display:grid;gap:1.25rem}
+.mnav ul a{font-family:var(--serif);font-size:2.25rem}
+.mnav .mfoot{display:grid;gap:.75rem;font-size:.9rem;color:rgba(244,238,227,.75)}
+
+/* Hero */
+.hero{position:relative;background:var(--espresso);color:var(--ivory);overflow:hidden;padding:0;min-height:min(94vh,900px);display:flex;align-items:flex-end}
+.hero .bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:ken 14s ease-out forwards}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(26,20,16,.55) 0%,rgba(26,20,16,.25) 35%,rgba(26,20,16,.88) 100%)}
+.hero .wrap{position:relative;z-index:2;width:100%;padding-block:9rem 3.5rem;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3rem;align-items:end}
+.hero h1{font-family:var(--sans);font-size:.75rem;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);line-height:1.6}
+.hero .display{font-family:var(--serif);font-size:clamp(3rem,8vw,7rem);line-height:.98;letter-spacing:-.02em;margin-top:1.5rem;max-width:12ch;text-wrap:balance}
+.hero .display em{color:var(--gold-soft);font-style:italic}
+.hero .sub{margin-top:1.75rem;max-width:36rem;font-size:1.0625rem;color:rgba(244,238,227,.88)}
+.hero .ctas{margin-top:2.25rem;display:flex;flex-wrap:wrap;gap:.9rem}
+.hero .soc-row{margin-top:2.5rem;display:flex;align-items:center;gap:1.1rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,238,227,.75)}
+.hero .soc-row a{display:flex;width:36px;height:36px;align-items:center;justify-content:center;border:1px solid rgba(244,238,227,.28);border-radius:50%;color:var(--ivory);transition:border-color .3s,color .3s}
+.hero .soc-row a:hover{border-color:var(--gold);color:var(--gold)}
+@keyframes ken{from{transform:scale(1.08)}to{transform:scale(1)}}
+.in{animation:rise 1s var(--ease) both}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* Review widget */
+.review-card{position:relative;width:min(100%,320px);background:rgba(26,20,16,.55);border:1px solid rgba(244,238,227,.18);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:1.4rem 1.5rem}
+.rc-top{display:flex;align-items:center;gap:1rem}
+.stars{display:flex;gap:2px;color:var(--gold)}
+.stars svg{width:15px;height:15px}
+.score{font-family:var(--serif);font-size:2.4rem;line-height:1}
+.score small{font-family:var(--sans);font-size:.8rem;color:rgba(244,238,227,.6);margin-left:.2rem}
+.rc-link{margin-top:1rem;padding-top:.9rem;border-top:1px solid rgba(244,238,227,.16);display:flex;align-items:center;gap:.55rem;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);transition:color .3s}
+.rc-link:hover{color:var(--gold-soft)}
+.rc-link svg:last-child{margin-left:auto}
+
+/* Problem */
+.problem{text-align:center}
+.problem p.big{font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.5rem);line-height:1.3;max-width:34ch;margin:1.5rem auto 0;text-wrap:balance}
+
+/* Difference */
+.diff-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,4vw,3.5rem)}
+.diff-grid > div{border-top:1px solid var(--gold);padding-top:1.5rem}
+.diff-grid h3{font-size:1.75rem;margin-bottom:.75rem}
+.diff-grid p{color:var(--muted)}
+
+/* Services */
+.svc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem}
+.svc{display:flex;flex-direction:column;gap:1rem;color:var(--espresso)}
+.svc .ph{aspect-ratio:3/4;overflow:hidden;background:var(--cream)}
+.svc .ph img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.svc:hover .ph img{transform:scale(1.05)}
+.svc h3{font-size:1.6rem}
+.svc p{color:var(--muted);font-size:.95rem}
+.svc .go{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-ink)}
+
+/* Before/after */
+.ba{position:relative;aspect-ratio:9/10;max-height:640px;width:100%;overflow:hidden;background:var(--charcoal);user-select:none;touch-action:pan-y}
+.ba img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ba .after{clip-path:inset(0 0 0 var(--pos,50%))}
+.ba .handle{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:var(--ivory);transform:translateX(-1px);pointer-events:none}
+.ba .handle::after{content:"";position:absolute;top:50%;left:50%;width:44px;height:44px;border-radius:50%;transform:translate(-50%,-50%);background:var(--ivory) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232b1a12' stroke-width='1.6'%3E%3Cpath d='M9 6l-6 6 6 6M15 6l6 6-6 6'/%3E%3C/svg%3E") center/20px no-repeat;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+.ba input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.ba .tag{position:absolute;top:1rem;padding:.35rem .7rem;background:rgba(26,20,16,.7);color:var(--ivory);font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;pointer-events:none}
+.ba .tag.b{left:1rem}.ba .tag.a{right:1rem}
+.work-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:1.25rem}
+.pf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem}
+.pf{position:relative;overflow:hidden;background:var(--charcoal);aspect-ratio:4/5}
+.pf img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s var(--ease)}
+.pf:hover img{transform:scale(1.05)}
+.pf figcaption{position:absolute;inset:auto 0 0 0;padding:2.5rem 1rem .9rem;background:linear-gradient(transparent,rgba(26,20,16,.85));color:var(--ivory);font-size:.8rem}
+.pf figcaption b{display:block;font-family:var(--serif);font-weight:400;font-size:1.2rem}
+
+/* Numbers */
+.numbers{color:var(--ivory);padding-block:clamp(3.5rem,7vw,5.5rem)}
+.num-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+.num-grid > div{padding:0 clamp(1rem,3vw,2.5rem);border-left:1px solid var(--line-dark)}
+.num-grid > div:first-child{border-left:0;padding-left:0}
+.num{font-family:var(--serif);font-size:clamp(2.75rem,6vw,4.5rem);line-height:1;color:var(--gold);font-variant-numeric:tabular-nums}
+.num small{font-size:.45em;margin-left:.15em;color:var(--gold-soft)}
+.num-label{margin-top:.75rem;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,238,227,.72)}
+
+/* Why */
+.why-list{display:grid;gap:clamp(3rem,7vw,6rem)}
+.why-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,6vw,5rem);align-items:center}
+.why-row:nth-child(even) .why-img{order:2}
+.why-img{aspect-ratio:4/3;overflow:hidden}
+.why-img img{width:100%;height:100%;object-fit:cover}
+.why-row h3{font-size:clamp(2rem,3.5vw,2.75rem);margin-block:1rem}
+.why-row p{color:var(--muted);max-width:46ch}
+
+/* Process */
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1.5rem;counter-reset:s}
+.steps li{position:relative;border-top:1px solid var(--line);padding-top:1.5rem}
+.steps li::before{counter-increment:s;content:counter(s,decimal-leading-zero);position:absolute;top:-.6rem;left:0;background:var(--sec);padding-right:.6rem;font-size:.72rem;letter-spacing:.2em;color:var(--gold-ink);line-height:1.2}
+.steps h3{font-size:1.45rem;margin-bottom:.6rem}
+.steps p{font-size:.93rem;color:var(--muted)}
+
+/* Testimonials */
+.quotes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1.5rem,4vw,3rem)}
+.quotes figure{margin:0;display:flex;flex-direction:column;gap:1.25rem}
+.quotes blockquote{margin:0;font-family:var(--serif);font-style:italic;font-size:1.55rem;line-height:1.3}
+.quotes blockquote::before{content:"\201C";display:block;font-size:3.5rem;line-height:.6;color:var(--gold);font-style:normal;margin-bottom:.5rem}
+.quotes figcaption{font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.rev-strip{margin-top:clamp(2.5rem,5vw,4rem);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:1rem;border-top:1px solid var(--line);padding-top:1.5rem}
+.rev-strip .l{display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+.rev-strip .stars{color:var(--gold-ink)}
+.rev-strip a{display:inline-flex;align-items:center;gap:.5rem}
+
+/* FAQ */
+.faq-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:clamp(2rem,6vw,5rem)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq details:first-child{border-top:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1.4rem 0;font-family:var(--serif);font-size:1.45rem}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--sans);font-weight:300;font-size:1.5rem;color:var(--gold-ink);transition:transform .3s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding-bottom:1.4rem;color:var(--muted);max-width:60ch}
+
+/* Contact */
+.contact{color:var(--ivory)}
+.contact-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(2.5rem,6vw,5rem);align-items:start}
+.contact h2{margin-block:1rem 1.25rem}
+.contact .lead{color:rgba(244,238,227,.78)}
+.ticks{list-style:none;padding:0;margin:2rem 0;display:grid;gap:.9rem}
+.ticks li{display:flex;gap:.8rem;align-items:flex-start;color:rgba(244,238,227,.88)}
+.ticks svg{color:var(--gold);margin-top:.3rem}
+.direct{display:grid;gap:1rem;border-top:1px solid var(--line-dark);padding-top:1.75rem}
+.direct a{display:flex;align-items:center;gap:1rem}
+.direct .ic{width:44px;height:44px;border:1px solid var(--line-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--gold);flex:none}
+.direct small{display:block;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(244,238,227,.55)}
+.direct span.v{font-family:var(--serif);font-size:1.4rem;line-height:1.2;word-break:break-word}
+.form{background:var(--ivory);color:var(--espresso);padding:clamp(1.5rem,4vw,2.75rem)}
+.form h3{font-size:2rem;margin-block:.75rem .5rem}
+.form .note{color:var(--muted);font-size:.93rem}
+.fgrid{margin-top:1.75rem;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.1rem 1.25rem}
+.f{display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.f.full{grid-column:1/-1}
+.f label{font-size:.7rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--chocolate)}
+.f label i{color:#9a3b20;font-style:normal}
+.f input,.f select,.f textarea{width:100%;font:inherit;font-size:.95rem;color:var(--espresso);background:#fbf8f2;border:1px solid var(--line);border-radius:3px;padding:.8rem .9rem;transition:border-color .2s,box-shadow .2s}
+.f select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237f6328' stroke-width='1.8'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .8rem center;background-size:16px;padding-right:2.4rem}
+.f textarea{min-height:110px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,169,97,.25)}
+.f.err input{border-color:#9a3b20}
+.f .msg{font-size:.78rem;color:#9a3b20;min-height:0}
+.badges{display:flex;flex-wrap:wrap;gap:.5rem 1.25rem;margin-block:1.5rem;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--chocolate)}
+.badges span{display:inline-flex;align-items:center;gap:.4rem}
+.badges svg{color:var(--gold-ink)}
+.form .btn{width:100%}
+.form .privacy{margin-top:1rem;font-size:.8rem;color:var(--muted);text-align:center}
+.sent{text-align:center;padding-block:2rem}
+.sent .ok{width:56px;height:56px;margin:0 auto 1.25rem;border-radius:50%;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;color:var(--gold-ink)}
+.sent h3{margin-bottom:.75rem}
+.sent p{color:var(--muted);max-width:40ch;margin-inline:auto}
+.sent .btn{margin-top:1.5rem;width:auto}
+
+/* Footer */
+footer{background:var(--espresso);color:rgba(244,238,227,.7);padding-block:4.5rem 2rem;font-size:.92rem}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:2.5rem}
+.foot-grid h4{font-family:var(--sans);font-size:.7rem;font-weight:500;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);margin-bottom:1.1rem}
+.foot-grid ul{list-style:none;padding:0;margin:0;display:grid;gap:.55rem}
+.foot-grid a:hover{color:var(--ivory)}
+.foot-about p{margin-top:1.25rem;max-width:36ch}
+.foot-soc{display:flex;gap:.7rem;margin-top:1.5rem}
+.foot-soc a{width:38px;height:38px;border:1px solid var(--line-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--ivory)}
+.foot-soc a:hover{border-color:var(--gold);color:var(--gold)}
+.foot-bottom{margin-top:3.5rem;padding-top:1.5rem;border-top:1px solid var(--line-dark);display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.8rem;color:rgba(244,238,227,.5)}
+.foot-bottom a{color:rgba(244,238,227,.75)}
+
+/* Mobile action bar */
+.mbar{display:none}
+
+/* Reveal (content is visible at rest; JS only hides what is below the fold) */
+.rv.pre{opacity:0;transform:translateY(24px)}
+.rv{transition:opacity .9s var(--ease),transform .9s var(--ease)}
+
+@media (max-width:1100px){
+  nav.main,.hdr-cta .btn{display:none}
+  .burger{display:flex}
+  .svc-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2.5rem}
+  .foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:860px){
+  .topbar .hide-sm{display:none}
+  .hero .wrap{grid-template-columns:minmax(0,1fr);padding-block:8rem 2.5rem;gap:2rem}
+  .diff-grid,.quotes,.work-layout,.why-row,.faq-layout,.contact-layout{grid-template-columns:minmax(0,1fr)}
+  .why-row:nth-child(even) .why-img{order:0}
+  .num-grid{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:2.5rem}
+  .num-grid > div:nth-child(3){border-left:0;padding-left:0}
+  .ba{aspect-ratio:4/5}
+}
+@media (max-width:620px){
+  .topbar{display:none}
+  .fgrid{grid-template-columns:minmax(0,1fr)}
+  .svc-grid,.steps,.foot-grid{grid-template-columns:minmax(0,1fr)}
+  .svc .ph{aspect-ratio:4/3}
+  .hero .ctas .btn{flex:1 1 100%}
+  .mbar{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;inset:auto 0 0 0;z-index:60;background:var(--charcoal);border-top:1px solid var(--line-dark);padding-bottom:env(safe-area-inset-bottom,0px)}
+  .mbar a{display:flex;flex-direction:column;align-items:center;gap:.25rem;padding:.7rem 0;color:var(--ivory);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase}
+  .mbar a svg{width:20px;height:20px;color:var(--gold)}
+  .mbar a.q{background:var(--gold);color:var(--espresso)}
+  .mbar a.q svg{color:var(--espresso)}
+  footer{padding-bottom:6rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.8l2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4L2.8 9.5l6.4-.8z"/></symbol>
+    <symbol id="i-fb" viewBox="0 0 24 24"><path fill="currentColor" d="M13.5 21v-7.6h2.6l.4-3h-3V8.5c0-.9.3-1.5 1.6-1.5h1.6V4.3c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4v2.2H7.9v3h2.6V21h3z"/></symbol>
+    <symbol id="i-ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="4"/></g><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2a9.7 9.7 0 0 0-8.4 14.6L2.3 21.7l5-1.3A9.7 9.7 0 1 0 12 2.2zm0 17.7c-1.5 0-2.9-.4-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 19.9zm4.4-6c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8.9c-.1.2-.3.2-.5.1-1.4-.7-2.4-1.3-3.3-2.9-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5c-.2 0-.4.1-.7.3-.2.3-.9.9-.9 2.2s1 2.6 1.1 2.7c.1.2 1.9 2.9 4.6 4.1 1.7.7 2.4.8 3.2.7.5-.1 1.4-.6 1.7-1.2.2-.6.2-1.1.1-1.2 0-.1-.2-.2-.4-.3z"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" d="M5 3.5h3.5l1.7 4.3-2.2 1.4a11 11 0 0 0 6.8 6.8l1.4-2.2 4.3 1.7V19a1.5 1.5 0 0 1-1.6 1.5C10.7 20 4 13.3 3.5 5.1A1.5 1.5 0 0 1 5 3.5z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3.5 6l8.5 7 8.5-7"/></g></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M4.5 12.5l5 5 10-11"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 12h15M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" d="M6 9l6 6 6-6"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></g></symbol>
+    <symbol id="i-laser" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12h18M12 3v18"/><circle cx="12" cy="12" r="3.5"/></g></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></g></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.6" d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-mono" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M56 22c-4-6-12-8-19-6-8 3-10 12-4 16 5 4 15 4 20 9 6 5 3 15-5 17-8 2-16-1-20-7"/><path d="M24 58c4 6 12 8 19 6 8-3 10-12 4-16-5-4-15-4-20-9-6-5-3-15 5-17 8-2 16 1 20 7"/></g></symbol>
+  </defs>
+</svg>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="group">
+      <span>Dublin &amp; surrounding counties</span>
+      <span class="dot hide-sm"></span>
+      <span class="hide-sm">Fully insured · 10-year warranty · Dust-free installation</span>
+    </div>
+    <div class="group">
+      <a href="tel:+353892519652">089 251 9652</a>
+      <a class="hide-sm" href="mailto:savvyspacedesign@gmail.com">savvyspacedesign@gmail.com</a>
+      <div class="soc">
+        <a href="https://instagram.com/savvyspacedesign" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ico"><use href="#i-ig"/></svg></a>
+        <a href="https://www.facebook.com/SavvySpaceDesign/reviews/?id=61569627342440&amp;sk=reviews" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ico"><use href="#i-fb"/></svg></a>
+        <a href="https://wa.me/353892519652" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<header class="site" id="hdr">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="SAVVY Space Design home">
+      <svg aria-hidden="true"><use href="#i-mono"/></svg>
+      <span><span class="w1">SAVVY</span><span class="w2">SPACE DESIGN</span></span>
+    </a>
+    <nav class="main" aria-label="Main">
+      <a class="nl" href="#services">Services</a>
+      <a class="nl" href="#work">Work</a>
+      <a class="nl" href="#process">Process</a>
+      <a class="nl" href="#reviews">Reviews</a>
+      <a class="nl" href="#contact">Contact</a>
+    </nav>
+    <div class="hdr-cta">
+      <a class="wa-chip" href="https://wa.me/353892519652?text=Hi%20Savvy%20Space%2C%20I'd%20like%20a%20quote%20for%20wall%20panelling" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
+      <a class="btn" href="#contact">Get a Free Quote</a>
+      <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mnav"><svg class="ico" style="width:22px;height:22px"><use href="#i-menu"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="mnav" id="mnav" hidden>
+  <div class="top">
+    <span class="logo"><svg aria-hidden="true"><use href="#i-mono"/></svg><span><span class="w1">SAVVY</span><span class="w2">SPACE DESIGN</span></span></span>
+    <button class="burger" style="display:flex" id="mclose" aria-label="Close menu"><svg class="ico" style="width:22px;height:22px"><use href="#i-x"/></svg></button>
+  </div>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#contact">Get a free quote</a></li>
+  </ul>
+  <div class="mfoot">
+    <span>Call or WhatsApp: 089 251 9652</span>
+    <span>savvyspacedesign@gmail.com</span>
+  </div>
+</div>
+
+<main id="top">
+<section class="hero">
+  <img class="bg" src="img/hero-hallway.jpg" alt="Bespoke cream wall panelling in a Dublin entrance hallway with warm ambient light" fetchpriority="high">
+  <div class="wrap">
+    <div>
+      <h1 class="in" style="animation-delay:.15s">Bespoke Wall Panelling · Dublin</h1>
+      <p class="display in" style="animation-delay:.3s">Transform Your Walls Into <em>Art</em></p>
+      <p class="sub in" style="animation-delay:.5s">Thoughtfully designed wall panelling that brings depth, warmth and a beautiful finish to the spaces you love — bespoke wood panels, luxury fluted walls, and timeless Georgian wainscoting handcrafted across Dublin.</p>
+      <div class="ctas in" style="animation-delay:.65s">
+        <a class="btn btn-gold" href="#contact">Start Your Project <svg class="ico"><use href="#i-arrow"/></svg></a>
+        <a class="btn btn-ghost" href="#work">View Portfolio</a>
+      </div>
+      <div class="soc-row in" style="animation-delay:.85s">
+        <span>Follow our work</span>
+        <a href="https://instagram.com/savvyspacedesign" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ico"><use href="#i-ig"/></svg></a>
+        <a href="https://www.facebook.com/SavvySpaceDesign/reviews/?id=61569627342440&amp;sk=reviews" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ico"><use href="#i-fb"/></svg></a>
+        <a href="https://wa.me/353892519652" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
+      </div>
+    </div>
+
+    <aside class="review-card in" style="animation-delay:1s" aria-label="Customer rating">
+      <div class="rc-top">
+        <div class="score">5.0<small>/ 5</small></div>
+        <div>
+          <div class="stars" aria-label="5 out of 5 stars">
+            <svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg>
+          </div>
+          <div style="font-size:.78rem;color:rgba(244,238,227,.7);margin-top:.3rem">850+ completed projects</div>
+        </div>
+      </div>
+      <a class="rc-link" href="https://www.facebook.com/SavvySpaceDesign/reviews/?id=61569627342440&amp;sk=reviews" target="_blank" rel="noopener"><svg class="ico"><use href="#i-fb"/></svg> Read Facebook reviews <svg class="ico"><use href="#i-arrow"/></svg></a>
+    </aside>
+  </div>
+</section>
+
+<section class="problem tone-dark" style="--sec:var(--chocolate)">
+  <div class="wrap rv">
+    <p class="eyebrow">The problem with most panelling</p>
+    <p class="big">Flat walls make an expensive home feel unfinished. The wrong crew turns a simple upgrade into weeks of dust, delays and regret.</p>
+  </div>
+</section>
+
+<section class="diff" style="--sec:var(--ivory)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><p class="eyebrow">The SAVVY difference</p><h2 class="display-lg">Precision you can see. A process you can trust.</h2></div>
+    </div>
+    <div class="diff-grid">
+      <div class="rv"><h3>Laser-guided precision</h3><p>Every line marked and every angle cut clean. No wobbles, no gaps.</p></div>
+      <div class="rv"><h3>Respect for your home</h3><p>Floors covered, furniture moved, dust extraction on every cut. Everything left spotless.</p></div>
+      <div class="rv"><h3>A finish that lasts</h3><p>Moisture-resistant materials and premium paint, backed by a written 10-year warranty.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="tone-dark" style="--sec:var(--chocolate)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><p class="eyebrow">What we do</p><h2 class="display-lg">Bespoke finishing, four ways.</h2></div>
+      <a class="textlink" href="#contact">Get a quote</a>
+    </div>
+    <div class="svc-grid">
+      <a class="svc rv" href="#contact" data-style="Luxury Wood Panel Walls">
+        <div class="ph"><img src="img/work-living.jpg" alt="Panelled living room feature wall" loading="lazy"></div>
+        <h3>Custom Wall Panelling</h3><p>Depth and character, made to fit your walls.</p><span class="go">Request a quote →</span>
+      </a>
+      <a class="svc rv" href="#contact" data-style="Traditional Wainscoting &amp; Beadboard">
+        <div class="ph"><img src="img/work-staircase-wide.jpg" alt="Wainscoting along a hallway and stairs" loading="lazy"></div>
+        <h3>Wainscoting &amp; Mouldings</h3><p>Georgian and period detailing for hallways and living rooms.</p><span class="go">Request a quote →</span>
+      </a>
+      <a class="svc rv" href="#contact" data-room="Hallway &amp; Stairs">
+        <div class="ph"><img src="img/work-stairs.jpg" alt="Panelled staircase in a Dublin home" loading="lazy"></div>
+        <h3>Staircase &amp; Hallway</h3><p>The first room guests see, panelled up the stairs and landing.</p><span class="go">Request a quote →</span>
+      </a>
+      <a class="svc rv" href="#contact" data-style="Full Wall Bespoke Panelling">
+        <div class="ph"><img src="img/work-bedroom.jpg" alt="Bedroom feature wall with panelling" loading="lazy"></div>
+        <h3>3D Visualisation</h3><p>See the layout on your own wall before we cut a panel.</p><span class="go">Request a quote →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="work" id="work" style="--sec:var(--ivory)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><p class="eyebrow">Recent transformations</p><h2 class="display-lg">Before, after and better for years.</h2></div>
+      <a class="textlink" href="https://instagram.com/savvyspacedesign" target="_blank" rel="noopener">More on Instagram</a>
+    </div>
+    <div class="work-layout">
+      <div class="ba rv" id="ba">
+        <img src="img/before.jpg" alt="Room before panelling" loading="lazy">
+        <img class="after" src="img/after.jpg" alt="Hallway after bespoke panelling" loading="lazy">
+        <span class="tag b">Before</span><span class="tag a">After</span>
+        <div class="handle"></div>
+        <input type="range" min="0" max="100" value="50" id="baRange" aria-label="Drag to compare before and after">
+      </div>
+      <div class="pf-grid">
+        <figure class="pf rv"><img src="img/work-stairs.jpg" alt="Staircase panelling" loading="lazy"><figcaption><b>Staircase &amp; landing</b>South Dublin</figcaption></figure>
+        <figure class="pf rv"><img src="img/work-living.jpg" alt="Living room panelling" loading="lazy"><figcaption><b>Living room wall</b>Dublin 4</figcaption></figure>
+        <figure class="pf rv"><img src="img/work-bedroom.jpg" alt="Bedroom feature wall" loading="lazy"><figcaption><b>Bedhead feature wall</b>Dublin</figcaption></figure>
+        <figure class="pf rv"><img src="img/work-staircase-wide.jpg" alt="Hallway wainscoting" loading="lazy"><figcaption><b>Hallway wainscoting</b>Wicklow</figcaption></figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="numbers on-dark" style="--sec:var(--espresso)" aria-label="Key figures">
+  <div class="wrap">
+    <div class="num-grid">
+      <div class="rv"><div class="num"><span data-count="850">850</span><small>+</small></div><div class="num-label">Walls transformed</div></div>
+      <div class="rv"><div class="num"><span data-count="99.4" data-dec="1">99.4</span><small>%</small></div><div class="num-label">Client satisfaction</div></div>
+      <div class="rv"><div class="num"><span data-count="48">48</span><small>hrs</small></div><div class="num-label">Average install time</div></div>
+      <div class="rv"><div class="num"><span data-count="10">10</span><small>yrs</small></div><div class="num-label">Written warranty</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="--sec:var(--ivory)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><p class="eyebrow">Why SAVVY</p><h2 class="display-lg">Considered from measure to clean-up.</h2></div>
+    </div>
+    <div class="why-list">
+      <div class="why-row rv">
+        <div class="why-img"><img src="img/work-stairs.jpg" alt="Mitred panelling joints on a staircase" loading="lazy"></div>
+        <div><p class="eyebrow">Craft</p><h3>Craftsmanship over shortcuts</h3><p>Mitred joins, flush reveals and corners that look right from every angle. We take the extra hour because you'll live with the result for years.</p></div>
+      </div>
+      <div class="why-row rv">
+        <div class="why-img"><img src="img/work-living.jpg" alt="Finished living room panelling" loading="lazy"></div>
+        <div><p class="eyebrow">Installation</p><h3>Clean, considered installation</h3><p>Panels are pre-cut in our Dublin workshop, so most rooms are finished in one to two days. Floors and furniture are covered and every cut uses dust extraction.</p></div>
+      </div>
+      <div class="why-row rv">
+        <div class="why-img"><img src="img/work-bedroom.jpg" alt="Bedroom panelling" loading="lazy"></div>
+        <div><p class="eyebrow">Service</p><h3>Designers you can reach</h3><p>Owner-led, with direct communication. You'll know who is coming, what is happening and when it will be done.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="process tone-dark" id="process" style="--sec:var(--chocolate)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><p class="eyebrow">How we work</p><h2 class="display-lg">Five steps to a clean finish.</h2></div>
+    </div>
+    <ol class="steps">
+      <li class="rv"><h3>Estimate</h3><p>Send wall sizes or photos. You get a fixed quote with no hidden costs.</p></li>
+      <li class="rv"><h3>Visual &amp; materials</h3><p>We show the layout on your room in 3D and bring finish samples to your home.</p></li>
+      <li class="rv"><h3>Laser measure</h3><p>Every wall is measured on site so panels are cut to the millimetre.</p></li>
+      <li class="rv"><h3>Installation</h3><p>Pre-cut panels go up in one to two days, with socket and TV cut-outs done in place.</p></li>
+      <li class="rv"><h3>Finish &amp; handover</h3><p>Filling, painting, a walkthrough together, and your written 10-year warranty.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section id="reviews" style="--sec:var(--ivory)">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <div><p class="eyebrow">Words from homeowners</p><h2 class="display-lg">What clients say after we leave.</h2></div>
+    </div>
+    <div class="quotes">
+      <figure class="rv"><blockquote>They covered everything, worked clean, and left it immaculate. The hall looks like it cost three times what it did.</blockquote><figcaption>Homeowner · South Dublin</figcaption></figure>
+      <figure class="rv"><blockquote>Every corner was perfect. You could see the care in the mitres. Surprised how quickly it was finished.</blockquote><figcaption>Interior designer · Dublin 4</figcaption></figure>
+      <figure class="rv"><blockquote>The 3D visualisation sold us. The finish was better than the render. Our staircase finally suits the house.</blockquote><figcaption>Homeowner · Wicklow</figcaption></figure>
+    </div>
+    <div class="rev-strip rv">
+      <div class="l">
+        <div class="stars" aria-label="5 out of 5 stars"><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg><svg><use href="#i-star"/></svg></div>
+        <span><strong>5.0 / 5</strong> from 850+ completed projects</span>
+      </div>
+      <a class="textlink" href="https://www.facebook.com/SavvySpaceDesign/reviews/?id=61569627342440&amp;sk=reviews" target="_blank" rel="noopener"><svg class="ico"><use href="#i-fb"/></svg> Read all reviews</a>
+    </div>
+  </div>
+</section>
+
+<section class="faq tone-dark" id="faq" style="--sec:var(--espresso)">
+  <div class="wrap faq-layout">
+    <div class="rv"><p class="eyebrow">Questions</p><h2 class="display-lg" style="margin-top:1rem">Answered before you ask.</h2></div>
+    <div class="rv">
+      <details><summary>Will the work make a mess?</summary><p>No. Panels are pre-cut in our workshop, we cover and protect everything, use dust extraction on site, and leave the room vacuumed and clean.</p></details>
+      <details><summary>How long does a typical hallway take?</summary><p>Most rooms are finished in one to two days. You'll get a clear timeline with your quote.</p></details>
+      <details><summary>Do you design as well as install?</summary><p>Yes. We can show the layout on your wall in 3D before we begin.</p></details>
+      <details><summary>Is the quote really free?</summary><p>Yes, with no obligation. Send wall sizes or photos and we'll come back with a fixed price.</p></details>
+      <details><summary>Which areas do you cover?</summary><p>All of Dublin, plus Kildare, Meath and Wicklow.</p></details>
+      <details><summary>Is the work guaranteed?</summary><p>Every installation comes with a written 10-year craftsmanship warranty. We carry full public and employer liability insurance.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="contact on-dark" id="contact" style="--sec:var(--charcoal)">
+  <div class="wrap contact-layout">
+    <div class="rv">
+      <p class="eyebrow">Free design consultation</p>
+      <h2 class="display-lg">Your new walls are one message away.</h2>
+      <p class="lead">A feature wall, staircase wainscoting or a whole floor. Tell us about the space and we'll come back with a visual preview and a fixed price.</p>
+      <ul class="ticks">
+        <li><svg class="ico"><use href="#i-check"/></svg>Free in-person or online design consultation</li>
+        <li><svg class="ico"><use href="#i-check"/></svg>Finish samples brought to your home</li>
+        <li><svg class="ico"><use href="#i-check"/></svg>Fixed price, no surprise invoices</li>
+      </ul>
+      <div class="direct">
+        <a href="tel:+353892519652"><span class="ic"><svg class="ico"><use href="#i-phone"/></svg></span><span><small>Call or WhatsApp</small><span class="v">089 251 9652</span></span></a>
+        <a href="mailto:savvyspacedesign@gmail.com"><span class="ic"><svg class="ico"><use href="#i-mail"/></svg></span><span><small>Email</small><span class="v">savvyspacedesign@gmail.com</span></span></a>
+      </div>
+    </div>
+
+    <div class="form rv" id="formBox">
+      <form id="lead" novalidate>
+        <p class="eyebrow">Free estimate</p>
+        <h3>Get your free Dublin estimate</h3>
+        <p class="note">No obligation. We usually reply within one working day.</p>
+        <div class="fgrid">
+          <div class="f"><label for="fn">First name <i>*</i></label><input id="fn" name="first_name" type="text" autocomplete="given-name" placeholder="e.g. John" required><span class="msg"></span></div>
+          <div class="f"><label for="ln">Last name</label><input id="ln" name="last_name" type="text" autocomplete="family-name" placeholder="e.g. Murphy"></div>
+          <div class="f"><label for="ph">Phone number <i>*</i></label><input id="ph" name="phone" type="tel" autocomplete="tel" placeholder="e.g. 087 123 4567" required><span class="msg"></span></div>
+          <div class="f"><label for="em">Email address <i>*</i></label><input id="em" name="email" type="email" autocomplete="email" placeholder="e.g. john@example.ie" required><span class="msg"></span></div>
+          <div class="f"><label for="st">Panelling style</label>
+            <select id="st" name="style">
+              <option>Luxury Wood Panel Walls</option>
+              <option>Traditional Wainscoting &amp; Beadboard</option>
+              <option>Geometric &amp; Feature Walls</option>
+              <option>Fluted &amp; Reeded Panelling</option>
+              <option>Full Wall Bespoke Panelling</option>
+              <option>Commercial &amp; Office Panelling</option>
+            </select></div>
+          <div class="f"><label for="rm">Room</label>
+            <select id="rm" name="room">
+              <option>Living Room</option>
+              <option value="Hallway &amp; Stairs">Hallway, Stairs &amp; Landing</option>
+              <option value="Master Bedroom">Master Bedroom / Headboard</option>
+              <option>Dining Room</option>
+              <option>Home Office</option>
+              <option value="Entire Property / Commercial">Full Property / Commercial</option>
+            </select></div>
+          <div class="f"><label for="loc">Location / Eircode</label><input id="loc" name="location" type="text" placeholder="e.g. Clontarf, D03"></div>
+          <div class="f"><label for="tm">Timeline</label>
+            <select id="tm" name="timeline">
+              <option>Within 1–2 weeks</option>
+              <option>This month</option>
+              <option>1–3 months</option>
+              <option>Planning &amp; budgeting</option>
+            </select></div>
+          <div class="f full"><label for="msg">Wall size or ideas</label><textarea id="msg" name="message" placeholder="e.g. 4 m wide feature wall, or two flights of stairs for wainscoting"></textarea></div>
+        </div>
+        <div class="badges">
+          <span><svg class="ico"><use href="#i-shield"/></svg>10-yr guarantee</span>
+          <span><svg class="ico"><use href="#i-clock"/></svg>48-hr install</span>
+          <span><svg class="ico"><use href="#i-laser"/></svg>Laser measuring</span>
+        </div>
+        <button class="btn btn-dark" type="submit">Get my free estimate <svg class="ico"><use href="#i-arrow"/></svg></button>
+        <p class="privacy">We only use your details to reply about your project. No spam.</p>
+      </form>
+      <div class="sent" id="sent" hidden>
+        <div class="ok"><svg class="ico" style="width:24px;height:24px"><use href="#i-check"/></svg></div>
+        <h3 id="sentTitle">Thanks.</h3>
+        <p>This is a preview build, so the form isn't connected yet. On the live site your details go straight to the Savvy team. To reach them now, call or WhatsApp 089 251 9652.</p>
+        <button class="btn btn-dark" type="button" id="again">Back to the form</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-about">
+        <span class="logo"><svg aria-hidden="true"><use href="#i-mono"/></svg><span><span class="w1">SAVVY</span><span class="w2">SPACE DESIGN</span></span></span>
+        <p>Bespoke wall panelling, wainscoting and mouldings for homes and businesses across Dublin and Leinster.</p>
+        <div class="foot-soc">
+          <a href="https://instagram.com/savvyspacedesign" target="_blank" rel="noopener" aria-label="Instagram"><svg class="ico"><use href="#i-ig"/></svg></a>
+          <a href="https://www.facebook.com/SavvySpaceDesign/reviews/?id=61569627342440&amp;sk=reviews" target="_blank" rel="noopener" aria-label="Facebook"><svg class="ico"><use href="#i-fb"/></svg></a>
+          <a href="https://wa.me/353892519652" target="_blank" rel="noopener" aria-label="WhatsApp"><svg class="ico"><use href="#i-wa"/></svg></a>
+        </div>
+      </div>
+      <div>
+        <h4>Panelling styles</h4>
+        <ul><li><a href="#services">Luxury wood panel walls</a></li><li><a href="#services">Georgian wainscoting</a></li><li><a href="#services">Fluted &amp; reeded panels</a></li><li><a href="#services">Geometric feature walls</a></li><li><a href="#services">Commercial boardrooms</a></li></ul>
+      </div>
+      <div>
+        <h4>Explore</h4>
+        <ul><li><a href="#work">Our work</a></li><li><a href="#process">Process</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#faq">FAQ</a></li><li><a href="#contact">Get a free quote</a></li></ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+353892519652">089 251 9652</a></li>
+          <li><a href="mailto:savvyspacedesign@gmail.com">savvyspacedesign@gmail.com</a></li>
+          <li>Instagram @savvyspacedesign</li>
+          <li>Serving Dublin, Kildare, Meath &amp; Wicklow</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 SAVVY Space Design · Fully insured · Registered in Ireland</span>
+      <span>Designed &amp; developed by <a href="https://digitalion.eu" target="_blank" rel="noopener">Digital Lion</a></span>
+    </div>
+  </div>
+</footer>
+
+<nav class="mbar" aria-label="Quick contact">
+  <a href="tel:+353892519652"><svg><use href="#i-phone"/></svg>Call</a>
+  <a href="https://wa.me/353892519652?text=Hi%20Savvy%20Space%2C%20I'd%20like%20a%20quote%20for%20wall%20panelling" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg>WhatsApp</a>
+  <a class="q" href="#contact"><svg><use href="#i-arrow"/></svg>Free quote</a>
+</nav>
+
+<script>
+(function(){
+  var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Sticky header once the hero top is passed
+  var hdr = document.getElementById('hdr');
+  function onScroll(){ hdr.classList.toggle('stuck', window.scrollY > 60); }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  // Mobile menu
+  var mnav = document.getElementById('mnav'), burger = document.getElementById('burger');
+  function setMenu(open){ mnav.hidden = !open; burger.setAttribute('aria-expanded', open); document.body.style.overflow = open ? 'hidden' : ''; }
+  burger.addEventListener('click', function(){ setMenu(true); });
+  document.getElementById('mclose').addEventListener('click', function(){ setMenu(false); });
+  mnav.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setMenu(false); }); });
+
+  // Before / after slider
+  var ba = document.getElementById('ba'), range = document.getElementById('baRange');
+  function setPos(v){ ba.style.setProperty('--pos', v + '%'); }
+  range.addEventListener('input', function(){ setPos(range.value); }); setPos(50);
+
+  // Service cards preselect the form
+  document.querySelectorAll('.svc').forEach(function(card){
+    card.addEventListener('click', function(){
+      if (card.dataset.style) document.getElementById('st').value = card.dataset.style;
+      if (card.dataset.room) document.getElementById('rm').value = card.dataset.room;
+    });
+  });
+
+  // Count-up numbers (final values are in the HTML; only animate when scrolled into view)
+  function countUp(el){
+    var end = parseFloat(el.dataset.count), dec = parseInt(el.dataset.dec || '0', 10), t0 = null, dur = 1600;
+    function step(t){ if(!t0) t0 = t; var p = Math.min((t - t0)/dur, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = (end * e).toFixed(dec); if (p < 1) requestAnimationFrame(step); else el.textContent = end.toFixed(dec); }
+    el.textContent = (0).toFixed(dec); requestAnimationFrame(step);
+  }
+
+  // Reveal: content is visible by default; hide only what starts below the fold
+  if (!reduce && 'IntersectionObserver' in window){
+    var vh = window.innerHeight;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (!en.isIntersecting) return;
+        en.target.classList.remove('pre');
+        en.target.querySelectorAll('[data-count]').forEach(countUp);
+        io.unobserve(en.target);
+      });
+    }, {rootMargin:'0px 0px -60px 0px'});
+    document.querySelectorAll('.rv').forEach(function(el){
+      if (el.getBoundingClientRect().top > vh) { el.classList.add('pre'); io.observe(el); }
+    });
+  }
+
+  // Lead form
+  var form = document.getElementById('lead'), sent = document.getElementById('sent');
+  function check(id, test, msg){
+    var input = document.getElementById(id), wrap = input.closest('.f'), out = wrap.querySelector('.msg');
+    var ok = test(input.value.trim());
+    wrap.classList.toggle('err', !ok); if (out) out.textContent = ok ? '' : msg;
+    return ok;
+  }
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var a = check('fn', function(v){ return v.length > 0; }, 'Enter your first name.');
+    var b = check('ph', function(v){ return v.replace(/[^\d+]/g,'').length >= 7; }, 'Enter a phone number we can call.');
+    var c = check('em', function(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }, 'Enter an email like name@example.ie.');
+    if (!(a && b && c)) { form.querySelector('.err input').focus(); return; }
+    document.getElementById('sentTitle').textContent = 'Thanks, ' + document.getElementById('fn').value.trim() + '.';
+    form.hidden = true; sent.hidden = false;
+  });
+  document.getElementById('again').addEventListener('click', function(){ sent.hidden = true; form.hidden = false; });
+})();
+</script>
